@@ -1,5 +1,5 @@
 import Koa = require('koa');
-const PORT = 3000;
+const PORT = 3001;
 const app = new Koa();
 import { router } from './router';
 
@@ -8,4 +8,4 @@ app.use(router.allowedMethods());
 
 app.listen(PORT, () => {
   console.log(`server listening on http://localhost:${PORT}`);
-})
+});
