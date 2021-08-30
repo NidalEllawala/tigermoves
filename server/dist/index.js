@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Koa = require("koa");
-const PORT = 3000;
+const Koa = require('koa');
+const PORT = 3001;
 const app = new Koa();
 const router_1 = require("./router");
 app.use(router_1.router.routes());

@@ -1,4 +1,4 @@
-import Koa = require('koa');
+const Koa = require('koa');
 const PORT = 3001;
 const app = new Koa();
 import { router } from './router';
