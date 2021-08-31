@@ -1,4 +1,5 @@
 import {Schema, model, connect } from 'mongoose';
+const mongoose = require('mongoose');
 
 interface Board {
   contains: string;
@@ -58,6 +59,31 @@ const BaghChalschema = new Schema<BaghChal>({
   game: [Gameschema]
 });
 
+const BaghChalModel = model<BaghChal>('baghchal', BaghChalschema);
+
+// async function connectDb (): Promise<void> {
+//   await connect(`mongodb://localhost:27017/newbaghchal`, {
+//     useNewUrlParser: true, 
+//     useUnifiedTopology: true
+//   });
+// }
+
+// connectDb().catch(err => console.log(err));
+
+mongoose.connect(`mongodb://localhost:27017/newbaghchal`, {
+  useNewUrlParser: true, 
+  useUnifiedTopology: true
+},
+function(error: any) {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Databse connected and ready to use');
+  }
+}
+);
+
+export {BaghChalModel};
 
 
 

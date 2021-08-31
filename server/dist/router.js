@@ -6,4 +6,5 @@ const router = new Router();
 exports.router = router;
 const controller_1 = require("./controllers/controller");
 router.get('/', controller_1.helloWorld);
+router.post('/newGame', controller_1.createNewGame);
 //# sourceMappingURL=router.js.map

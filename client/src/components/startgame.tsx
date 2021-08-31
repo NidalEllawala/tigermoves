@@ -2,9 +2,7 @@ import 'bulma/css/bulma.min.css';
 
 import { useState } from 'react';
 
-
-
-function Home() {
+function StartGame({fnc}: any) {
 
   const [choice, setChoice] = useState('');
 
@@ -12,13 +10,11 @@ function Home() {
     setChoice(event.target.value);
   }
 
-  // function handleStartGame (event: any) {
-
-  // }
-
-   return (
+  return (
     <div id="panel">
-      <form>
+      <form onSubmit={(event) => {
+        fnc(choice, event)
+        }}>
       <p className="text">Play as:</p>
       <label className="radio text">
         <input type="radio" id="tiger" name="choose-player" value="tiger" onChange={newGameInput} />
@@ -30,17 +26,15 @@ function Home() {
         Goat
       </label>
       
-      <a><button type="submit" className="button is-fullwidth panel-item">Start New Game</button></a>
+      <button type="submit" className="button is-fullwidth panel-item">Start New Game</button>
       </form>
       <p className="text">OR</p>
       <div>
-      <a href="#"> <button type="button" className="button is-fullwidth panel-item">Join Existing Game</button> </a>
+      <button type="button" className="button is-fullwidth panel-item">Join Existing Game</button>
       </div>
 
     </div>
-  );
-
+  )
 }
 
-
-export {Home};
+export {StartGame};
