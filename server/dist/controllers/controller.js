@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNewGame = exports.helloWorld = void 0;
+exports.joinGame = exports.createNewGame = exports.helloWorld = void 0;
 const index_1 = require("../model/index");
 const board_1 = require("../model/board");
 const helloWorld = (ctx) => {
@@ -29,4 +29,18 @@ const createNewGame = async (ctx) => {
     }
 };
 exports.createNewGame = createNewGame;
+const joinGame = async (ctx) => {
+    try {
+        const gameId = ctx.request.body.id;
+        console.log(gameId);
+        const toJoin = await index_1.BaghChalModel.findOne({ uid: gameId });
+        console.log(toJoin.isTaken);
+        ctx.body = { player: toJoin.isTaken === 'tiger' ? 'goat' : 'tiger', gameId: toJoin.uid };
+        ctx.response.status = 200;
+    }
+    catch (err) {
+        console.log(err);
+    }
+};
+exports.joinGame = joinGame;
 //# sourceMappingURL=controller.js.map

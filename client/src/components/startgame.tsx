@@ -2,7 +2,7 @@ import 'bulma/css/bulma.min.css';
 
 import { useState } from 'react';
 
-function StartGame({fnc, handleJoin}: any) {
+function StartGame({fnc, setStartCreated, setJoinExisting}: any) {
 
   const [choice, setChoice] = useState('');
 
@@ -30,8 +30,8 @@ function StartGame({fnc, handleJoin}: any) {
       </form>
       <p className="text">OR</p>
       <div>
-      <button onClick={(event) => {
-        handleJoin();
+      <button onClick={() => {
+        setJoinExisting(true);
       }}type="button" className="button is-fullwidth panel-item">Join Existing Game</button>
       </div>
     </div>
