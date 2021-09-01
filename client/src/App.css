@@ -10,6 +10,11 @@
   align-items: center;
 }
 
+#game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 #panel {
   width: 30%;
   height: 45%;
@@ -61,3 +66,58 @@
     transform: rotate(360deg);
   }
 }
+
+.panel-item {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+#game-board {
+  background-image: url('./assets/board.jpg');
+  background-size: cover;
+  height: 500px;
+  width: 500px; 
+  margin-right: 2rem;
+  border: 8px inset brown;
+}
+
+#movements {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  padding: 40px;
+  column-gap: 40px;
+  row-gap: 40px;
+}
+
+.default {
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  text-align: center;
+  
+}
+
+.highlight {
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+.move-piece {
+  background: rgba(0, 100, 0, 0.5);
+  cursor: pointer;
+}
+
+.capture {
+  background: rgba(255, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+#info-panel {
+  width: 30vw;
+}
+
+
+#dsp-winner {
+  text-align: center;
+}
+

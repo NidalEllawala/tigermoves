@@ -7,6 +7,7 @@ import { Home } from './components/home';
 import { StartGame } from './components/startgame';
 import { StartCreated } from './components/startcreated';
 import { JoinExistingGame } from './components/joinexisting';
+import { Game } from './components/game';
 
 const { newGame, joinGame } = require('./api/api');
 
@@ -18,7 +19,7 @@ function App() {
 
   const [startCreated, setStartCreated] = useState(false);
   const [joinExisting, setJoinExisting] = useState(false);
-  const [playCreated, setPlayCreated] = useState(false);
+  const [playGame, setPlayGame] = useState(false);
 
   function createGame (playerRole: string, e: any) {
     e.preventDefault();
@@ -37,7 +38,11 @@ function App() {
     e.preventDefault();
     joinGame('http://localhost:3001/joinGame', id)
     .then((result: any) => {
-      console.log(result);
+      setgameId(result.gameId);
+      setPlayerRole(result.player);
+      setPlayGame(true);
+      console.log(gameId);
+      console.log(playerRole);
     });
   }
 
@@ -49,11 +54,15 @@ function App() {
       }
 
       {startCreated &&
-        <StartCreated gameId={gameId} handleStart={setPlayCreated}/> 
+        <StartCreated gameId={gameId} setPlayGame={setPlayGame} setStartCreated={setStartCreated}/> 
       }
 
       {joinExisting && 
         <JoinExistingGame handleJoin={joinExistingGame}/>
+      }
+
+      {playGame &&
+        <Game />
       }
     </div>
   );

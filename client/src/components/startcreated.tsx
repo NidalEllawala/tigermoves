@@ -6,7 +6,7 @@ type StartCreatedProps = {
   gameId: number | null;
 }
 
-function StartCreated({gameId, setPlayCreated}: any) {
+function StartCreated({gameId, setPlayGame, setStartCreated}: any) {
 
   return (
     <div id="panel">
@@ -15,7 +15,8 @@ function StartCreated({gameId, setPlayCreated}: any) {
       <button type="button" className="button is-fullwidth panel-item">{gameId}</button>
       <p className="text">Your opponent can use this ID to join the game</p>
       <button onClick={() => {
-        setPlayCreated(true)
+        setPlayGame(true);
+        setStartCreated(false);
       }} type="button" className="button is-fullwidth panel-item">Play Bagh Chal</button>
       </form>
     </div>
