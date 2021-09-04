@@ -89,6 +89,7 @@
   padding: 40px;
   column-gap: 40px;
   row-gap: 40px;
+  border: 4px dotted blue;
 }
 
 .default {
