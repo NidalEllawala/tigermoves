@@ -25,9 +25,9 @@ function StartGame({fnc, setStartCreated, setJoinExisting}: any) {
         <input type="radio" id="goat" name="choose-player" value="goat" onChange={newGameInput} />
         Goat
       </label>
-      
       <button type="submit" className="button is-fullwidth panel-item">Start New Game</button>
       </form>
+      
       <p className="text">OR</p>
       <div>
       <button onClick={() => {

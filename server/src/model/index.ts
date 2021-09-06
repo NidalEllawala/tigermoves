@@ -1,34 +1,36 @@
 import {Schema, model, connect } from 'mongoose';
 const mongoose = require('mongoose');
 
-interface Board {
-  contains: string;
-  possible_moves: (number | null)[];
-  capture: (number | null)[];
-}
+import { Board, Game, BaghChal } from './interface'
 
-interface Game {
-  turn: number;
-  totalGoats: number;
-  totalTigers: number;
-  goatsPlaced: number;
-  goatsCaptured: number;
-  tigersTrapped: number;
-  towinTiger: number;
-  towinGoat: number;
-  gameOver: boolean;
-  winner: string;
-  board: Board[];
-}
+// interface Board {
+//   contains: string;
+//   possible_moves: (number | null)[];
+//   capture: (number | null)[];
+// }
 
-interface BaghChal {
-  uid: number;
-  playerCount: number;
-  isTaken: string;
-  tiger: string;
-  goat: string;
-  game: Game;
-}
+// interface Game {
+//   turn: number;
+//   totalGoats: number;
+//   totalTigers: number;
+//   goatsPlaced: number;
+//   goatsCaptured: number;
+//   tigersTrapped: number;
+//   towinTiger: number;
+//   towinGoat: number;
+//   gameOver: boolean;
+//   winner: string;
+//   board: Board[];
+// }
+
+// interface BaghChal {
+//   uid: number;
+//   playerCount: number;
+//   isTaken: string;
+//   tiger: string;
+//   goat: string;
+//   game: Game;
+// }
 
 const Boardschema = new Schema<Board>({
   contains: {type: String},
@@ -83,7 +85,7 @@ function(error: any) {
 }
 );
 
-export {BaghChalModel};
+export { BaghChalModel };
 
 
 

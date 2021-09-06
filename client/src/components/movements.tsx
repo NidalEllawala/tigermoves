@@ -8,17 +8,16 @@ function Movements ({movements}: MovementsProps) {
   const positions = movements.map((position, index) => {
     switch (position.contains) {
       case 'tiger': 
-        return <div id={index.toString()} className="default"></div>
+        return <div id={index.toString()} className="default">{"\u9899"}</div>
       case 'goat':
-        return <div id={index.toString()} className="default"></div>
+        return <div id={index.toString()} className="default">{"\u9898"}</div>
       default:
         return <div id={index.toString()} className="default"></div>
       }
     });
   
-
   return (
-    <div>{positions}</div>
+    <div id="movements">{positions}</div>
   );
 }
     

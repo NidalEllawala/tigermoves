@@ -14,8 +14,8 @@ const { newGame, joinGame } = require('./api/api');
 
 function App() {
 
-  const [playerRole, setPlayerRole] = useState(null);
-  const [gameId, setgameId] = useState(null);
+  const [playerRole, setPlayerRole] = useState('');
+  const [gameId, setgameId] = useState(0);
 
   const [startCreated, setStartCreated] = useState(false);
   const [joinExisting, setJoinExisting] = useState(false);
@@ -49,7 +49,7 @@ function App() {
 
   return (
     <div className="background">
-      {playerRole === null && gameId === null && joinExisting === false &&
+      {playerRole === '' && gameId === 0 && joinExisting === false &&
         <StartGame fnc={createGame} setStartCreated={setStartCreated} setJoinExisting={setJoinExisting}/>
       }
 
@@ -62,7 +62,7 @@ function App() {
       }
 
       {playGame &&
-        <Game />
+        <Game player={playerRole} id={gameId}/>
       }
     </div>
   );
