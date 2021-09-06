@@ -13,12 +13,20 @@ type GameProps = {
 
 function Game ({player, id}: GameProps) {
   const [game, setGame] = useState(board);
-  //const [socket, setSocket] = useState(io('http://localhost:3001'));
+  const [userMessages, setUserMessages] = useState<string[]>([`${player} has joined the game-${id}`]);
 
   useEffect(() => {
     console.log('useEffect');
     const socket = io('http://localhost:3001');
     socket.emit('join this game', {gameId: id, player: player});
+
+    socket.on('message', ({message}) => {
+      setUserMessages((prev) => {
+        const messages = [...prev, message];
+        console.log(messages);
+        return messages;
+      })
+    })
   }, [id, player]);
 
 
@@ -28,7 +36,7 @@ function Game ({player, id}: GameProps) {
       <Gameover />
       <Movements movements={game}/>
     </div>
-    <InfoPanel />
+    <InfoPanel messages={userMessages}/>
   </div>
   )
 }

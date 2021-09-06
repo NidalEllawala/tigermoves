@@ -1,12 +1,20 @@
 
-function InfoPanel () {
+type InfoPanelProps = {
+  messages: string[];
+}
+
+
+function InfoPanel ({messages}: InfoPanelProps) {
+  const showMessages = messages.map((message) => {
+    return (<p>{message}</p>)
+  })
   return (
     <div id="info-panel"> 
       <div className="box">
         <button type="button" id="tiger-turn" className="button is-fullwidth is-medium" >TIGER</button>
         <button type="button" id="goat-turn" className="button is-fullwidth is-medium" >GOAT</button>
         <div id="message" className="box">
-          <p>You have joined the game</p>
+          {showMessages}
         </div>
         <table className="table is-striped">
           <tr>

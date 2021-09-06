@@ -12,6 +12,12 @@ const io = new Server(httpServer, {
   }
 });
 
+import { 
+  getGame, 
+  addPlayer,
+  currentBoardPosition 
+} from './model/gamefunctions';
+
 const PORT = 3001;
 
 app.use(cors());
@@ -20,7 +26,27 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 io.on('connection', (socket: Socket) => {
-  console.log('socket connected', socket.id);
+
+  socket.on('join this game', async (join) => {
+
+    console.log('join this game');
+    const game = await getGame(join.gameId);
+    if (game) {
+      if (game.tiger === '' || game.goat === '') {
+        addPlayer(game, join.player, socket.id);
+      }
+      if (game.playerCount === 1) {
+        io.to(socket.id).emit('message', {message: 'waiting for other player'});
+      }
+      if (game.playerCount === 2) {
+        //const players = getGame(join.gameId);
+        io.to(game.goat).to(game.tiger).emit('message', {message: 'both players have joined'});
+        io.to(game.goat).to(game.tiger).emit('update board', currentBoardPosition(game.game));
+        //io.to(game.goat).to(game.tiger).emit('update board', getGame(join.gameId).board.currentBoardPosition());
+        //nextTurn(join.gameId);
+      }
+    }
+  });
 
 })
 
