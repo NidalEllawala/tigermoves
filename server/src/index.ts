@@ -28,12 +28,11 @@ app.use(router.allowedMethods());
 io.on('connection', (socket: Socket) => {
 
   socket.on('join this game', async (join) => {
-
-    console.log('join this game');
     const game = await getGame(join.gameId);
+    console.log(game);
     if (game) {
       if (game.tiger === '' || game.goat === '') {
-        addPlayer(game, join.player, socket.id);
+        await addPlayer(game, join.player, socket.id);
       }
       if (game.playerCount === 1) {
         io.to(socket.id).emit('message', {message: 'waiting for other player'});

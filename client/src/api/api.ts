@@ -32,7 +32,7 @@ const joinGame = (url: string, id: number) => {
   return fetch(url, {
     method: 'POST',
     headers: {
-      'COntent-Type': 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({id: id})
   })

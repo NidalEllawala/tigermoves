@@ -21,11 +21,11 @@ app.use(router_1.router.routes());
 app.use(router_1.router.allowedMethods());
 io.on('connection', (socket) => {
     socket.on('join this game', async (join) => {
-        console.log('join this game');
         const game = await gamefunctions_1.getGame(join.gameId);
+        console.log(game);
         if (game) {
             if (game.tiger === '' || game.goat === '') {
-                gamefunctions_1.addPlayer(game, join.player, socket.id);
+                await gamefunctions_1.addPlayer(game, join.player, socket.id);
             }
             if (game.playerCount === 1) {
                 io.to(socket.id).emit('message', { message: 'waiting for other player' });
@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
             if (game.playerCount === 2) {
                 //const players = getGame(join.gameId);
                 io.to(game.goat).to(game.tiger).emit('message', { message: 'both players have joined' });
+                io.to(game.goat).to(game.tiger).emit('update board', gamefunctions_1.currentBoardPosition(game.game));
                 //io.to(game.goat).to(game.tiger).emit('update board', getGame(join.gameId).board.currentBoardPosition());
                 //nextTurn(join.gameId);
             }

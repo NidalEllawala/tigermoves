@@ -23,11 +23,10 @@ function App() {
 
   function createGame (playerRole: string, e: any) {
     e.preventDefault();
-    console.log('setGame called');
-    console.log('line 20', playerRole)
+    
     newGame('http://localhost:3001/newGame', playerRole)
     .then((result: any) => {
-      console.log(result)
+      
       setgameId(result.gameId);
       setPlayerRole(result.player);
       setStartCreated(true);
@@ -38,11 +37,10 @@ function App() {
     e.preventDefault();
     joinGame('http://localhost:3001/joinGame', id)
     .then((result: any) => {
+      console.log(result);
       setgameId(result.gameId);
       setPlayerRole(result.player);
       setPlayGame(true);
-      console.log(gameId);
-      console.log(playerRole);
     });
   }
 
@@ -58,7 +56,7 @@ function App() {
       }
 
       {joinExisting && 
-        <JoinExistingGame handleJoin={joinExistingGame}/>
+        <JoinExistingGame handleJoin={joinExistingGame} setJoinExisting={setJoinExisting}/>
       }
 
       {playGame &&

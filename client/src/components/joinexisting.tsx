@@ -1,18 +1,19 @@
 import { useState } from 'react';
 
-function JoinExistingGame ({handleJoin}: any) {
+function JoinExistingGame ({handleJoin, setJoinExisting}: any) {
 
-  const [gameId, setGameId] = useState(null);
+  const [gameId, setGameId] = useState(0);
 
   function handleInput (event: any) {
     setGameId(event.target.value);
-    console.log(gameId);
+    
   }
 
   return (
     <div id="panel">
       <form onSubmit={(event) => {
         handleJoin(gameId, event);
+        setJoinExisting(false)
       }}>
         <label className="text">Enter your game id below:
           <input onChange={handleInput} type="number" name="id" id="id" />

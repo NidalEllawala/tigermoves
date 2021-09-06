@@ -32,11 +32,11 @@ const createNewGame = async (ctx: Koa.Context) => {
 const joinGame = async (ctx: Koa.Context) => {
   try {
     const gameId = ctx.request.body.id;
-    console.log(gameId);
+    
     const toJoin = await BaghChalModel.findOne({uid: gameId});
-    console.log(toJoin.isTaken);
+    
     ctx.body = {player: toJoin.isTaken === 'tiger' ? 'goat' : 'tiger', gameId: toJoin.uid}
-    ctx.response.status = 200;
+    ctx.response.status = 201;
   } catch (err) {
     console.log(err);
   }
