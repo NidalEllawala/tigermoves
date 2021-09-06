@@ -53,7 +53,7 @@ const BaghChalschema = new mongoose_1.Schema({
     isTaken: { type: String },
     tiger: { type: String },
     goat: { type: String },
-    game: [Gameschema]
+    game: Gameschema
 });
 const BaghChalModel = mongoose_1.model('baghchal', BaghChalschema);
 exports.BaghChalModel = BaghChalModel;

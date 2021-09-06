@@ -58,7 +58,7 @@ const BaghChalschema = new Schema<BaghChal>({
   isTaken: {type: String},
   tiger: {type: String},
   goat: {type: String},
-  game: [Gameschema]
+  game: Gameschema
 });
 
 const BaghChalModel = model<BaghChal>('baghchal', BaghChalschema);
