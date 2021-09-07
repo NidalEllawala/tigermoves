@@ -6,4 +6,14 @@ interface Board {
   capture: boolean;
 }
 
-export type { Board }
+interface BoardPosition {
+  tigers: number[]; 
+  goats: number[]; 
+  score: { 
+      goatsRemaining: number;
+      goatsCaptured: number;
+      tigersTrapped: number;
+  }
+}
+
+export type { Board, BoardPosition }

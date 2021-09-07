@@ -6,7 +6,9 @@ import { InfoPanel } from './infopanel';
 import { useState, useEffect } from 'react';
 import { board } from './board';
 
-import { Board } from './interfaces';
+import { updateMessages, updateBoard } from './helpers';
+
+import { Board, BoardPosition } from './interfaces';
 
 
 type GameProps = {
@@ -15,42 +17,22 @@ type GameProps = {
 }
 
 function Game ({player, id}: GameProps) {
+  const [socket, setSocket] = useState(io('http://localhost:3001'));
   const [game, setGame] = useState(board);
   const [userMessages, setUserMessages] = useState<string[]>([`${player} has joined the game-${id}`]);
 
   useEffect(() => {
-    
-    const socket = io('http://localhost:3001');
+    const test = io('http://localhost:3001');
+    console.log(test);
     socket.emit('join this game', {gameId: id, player: player});
-
     socket.on('message', ({message}) => {
-      setUserMessages((prev) => {
-        const messages = [...prev, message];
-        
-        return messages;
-      })
+      updateMessages(message, setUserMessages)
     });
-
-    socket.on('update board', (positions) => {
-      setGame((prev) => {
-        const next: Board[] = []; 
-        prev.forEach((item) => {
-          next.push({...item})
-        })
-        positions.tigers.forEach((item: number) => {
-          next[item].contains = 'tiger'
-        })
-        positions.goats.forEach((item: number) => {
-          next[item].contains = 'goat'
-        })
-        return next;
-      });
-
-
-    });
-
-  }, [id, player]);
-
+    socket.on('update board', (positions: BoardPosition) => {
+      updateBoard(positions, setGame);
+    })
+    //socket on disconnet reconnnect
+  }, [setSocket]); 
 
   return (
   <div id="game-container">

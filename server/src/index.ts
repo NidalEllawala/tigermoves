@@ -26,6 +26,7 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 io.on('connection', (socket: Socket) => {
+  console.log('front end connected');
 
   socket.on('join this game', async (join) => {
     const game = await getGame(join.gameId);
@@ -40,9 +41,8 @@ io.on('connection', (socket: Socket) => {
       if (game.playerCount === 2) {
         //const players = getGame(join.gameId);
         io.to(game.goat).to(game.tiger).emit('message', {message: 'both players have joined'});
-        console.log(game.game);
-        currentBoardPosition(game.game);
-        //io.to(game.goat).to(game.tiger).emit('update board', currentBoardPosition(game.game));
+        const board = currentBoardPosition(game.game);
+        io.to(game.goat).to(game.tiger).emit('update board', board);
         //io.to(game.goat).to(game.tiger).emit('update board', getGame(join.gameId).board.currentBoardPosition());
         //nextTurn(join.gameId);
       }

@@ -15,25 +15,24 @@ const addPlayer = async (game: any, player: string, sockId: string) => {
 }
 
 const currentBoardPosition = (game: any) => {
-  console.log(game);
-  // const tigers = [];
-  // const goats = [];
-  // for (let i = 0; i < game.board.length; i++) {
-  //   if (game.board[i].contains === 'tiger') {
-  //     tigers.push(i);
-  //   } else if (game.board[i].contains === 'goat') {
-  //     goats.push(i);
-  //   }
-  // }
-  // return {
-  //   tigers: tigers, 
-  //   goats: goats, 
-  //   score: { 
-  //     goatsRemaining: game.game.totalGoats - game.game.goatsPlaced,
-  //     goatsCaptured: game.goatsCaptured,
-  //     tigersTrapped: game.tigersTrapped,
-  //   } 
-  // };
+  const tigers = [];
+  const goats = [];
+  for (let i = 0; i < game.board.length; i++) {
+    if (game.board[i].contains === 'tiger') {
+      tigers.push(i);
+    } else if (game.board[i].contains === 'goat') {
+      goats.push(i);
+    }
+  }
+  return {
+    tigers: tigers, 
+    goats: goats, 
+    score: { 
+      goatsRemaining: game.totalGoats - game.goatsPlaced,
+      goatsCaptured: game.goatsCaptured,
+      tigersTrapped: game.tigersTrapped,
+    } 
+  };
 }
 
 
