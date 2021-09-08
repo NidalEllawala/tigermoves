@@ -27,5 +27,11 @@ interface BaghChal {
   game: Game;
 }
 
+interface Moves {
+  to: number[];
+  from: number;
+  capture: number[];
+}
 
-export { Board, Game, BaghChal }
+
+export { Board, Game, BaghChal, Moves }

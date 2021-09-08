@@ -20,7 +20,6 @@ app.use(bodyParser());
 app.use(router_1.router.routes());
 app.use(router_1.router.allowedMethods());
 io.on('connection', (socket) => {
-    console.log('front end connected');
     socket.on('join this game', async (join) => {
         const game = await gamefunctions_1.getGame(join.gameId);
         if (game) {
@@ -31,45 +30,34 @@ io.on('connection', (socket) => {
                 io.to(socket.id).emit('message', { message: 'waiting for other player' });
             }
             if (game.playerCount === 2) {
-                //const players = getGame(join.gameId);
                 io.to(game.goat).to(game.tiger).emit('message', { message: 'both players have joined' });
                 const board = gamefunctions_1.currentBoardPosition(game.game);
                 io.to(game.goat).to(game.tiger).emit('update board', board);
-                //io.to(game.goat).to(game.tiger).emit('update board', getGame(join.gameId).board.currentBoardPosition());
-                //nextTurn(join.gameId);
+                nextTurn(game);
             }
         }
     });
+    function nextTurn(game) {
+        const turn = gamefunctions_1.getTurn(game.game);
+        console.log(turn);
+        switch (turn) {
+            case 'goats move - Phase 1':
+                const spaces = gamefunctions_1.emptySpaces(game.game);
+                io.to(game.goat).emit('place goat', { emptySpaces: spaces });
+                break;
+            case 'goats move - Phase 2':
+                const goatsMoves = gamefunctions_1.getMoves('goat', game.game);
+                io.to(game.goat).emit('goats turn', { possibleMoves: goatsMoves });
+                break;
+            case 'tigers move':
+                console.log('case called');
+                const tigersMoves = gamefunctions_1.getMoves('tiger', game.game);
+                io.to(game.tiger).emit('tigers turn', { possibleMoves: tigersMoves });
+                break;
+        }
+    }
 });
-//io.on("connection", (socket: Socket) => {
-// socket.on('join this game', (join) => {
-//   if (gameExists(join.gameId)) {
-//     const game = getGame(join.gameId)
-//     if (game.tiger === '' || game.goat === '') {
-//       addPlayer(join.gameId, join.player, socket.id);
-//       io.to(socket.id).emit('player has joined', {player: join.player});
-//       if (game.playerCount === 1) {
-//         io.to(socket.id).emit('waiting for other player');
-//       }
-//       if (game.playerCount === 2) {
-//         const players = getGame(join.gameId);
-//         io.to(players.goat).to(players.tiger).emit('both players have joined');
-//         io.to(players.goat).to(players.tiger).emit('update board', getGame(join.gameId).board.currentBoardPosition());
-//         nextTurn(join.gameId);
-//       }
-//     }
-//   } else {
-//     io.to(socket.id).emit('server full');
-//     socket.disconnect();
-//     return;
-//   }
-// });
-//});
 httpServer.listen(PORT, () => {
     console.log(`server listening on http://localhost:${PORT}`);
 });
-//export { httpServer };
-// app.listen(PORT, () => {
-//   console.log(`server listening on http://localhost:${PORT}`);
-// });
 //# sourceMappingURL=index.js.map

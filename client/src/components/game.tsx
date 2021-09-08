@@ -31,6 +31,10 @@ function Game ({player, id}: GameProps) {
     socket.on('update board', (positions: BoardPosition) => {
       updateBoard(positions, setGame);
     })
+
+    socket.on('tigers turn', (data) => {
+      console.log('line 36', data);
+    })
     //socket on disconnet reconnnect
   }, [setSocket]); 
 

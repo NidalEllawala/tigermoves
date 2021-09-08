@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.currentBoardPosition = exports.addPlayer = exports.getGame = void 0;
+exports.getMoves = exports.emptySpaces = exports.getTurn = exports.currentBoardPosition = exports.addPlayer = exports.getGame = void 0;
 const index_1 = require("./index");
 const getGame = async (id) => {
     const found = await index_1.BaghChalModel.findOne({ uid: id }).exec();
@@ -36,4 +36,55 @@ const currentBoardPosition = (game) => {
     };
 };
 exports.currentBoardPosition = currentBoardPosition;
+const getTurn = (game) => {
+    return 'tigers move';
+    // if (game.turn %2 != 0) {
+    //   if (game.goatsPlaced < game.totalGoats) {
+    //     return 'goats move - Phase 1';
+    //   } else {
+    //     return 'goats move - Phase 2';
+    //   }
+    // } else {
+    //   return 'tigers move';
+    // }
+};
+exports.getTurn = getTurn;
+const emptySpaces = (game) => {
+    const empty = [];
+    for (let i = 0; i < game.board.length; i++) {
+        if (game.board[i].contains === 'empty') {
+            empty.push(i);
+        }
+    }
+    return empty;
+};
+exports.emptySpaces = emptySpaces;
+const getMoves = (player, game) => {
+    const possibleMoves = [];
+    for (let i = 0; i < game.board.length; i++) {
+        let move = { from: 0, to: [], capture: [] };
+        if (game.board[i].contains === player) {
+            move.from = i;
+            game.board[i].possible_moves.forEach((el, index) => {
+                if (game.board[el].contains === 'empty') {
+                    move.to.push(el);
+                }
+                else if (player === 'tiger' && game.board[el].contains === 'goat') {
+                    if (game.board[i].capture[index] != null && game.board[game.board[i].capture[index]].contains === 'empty') {
+                        move.capture.push(game.board[i].capture[index]);
+                    }
+                }
+            });
+            if (move.to.length || move.capture.length) {
+                possibleMoves.push(move);
+            }
+        }
+    }
+    if (player === 'tiger') {
+        game.tigersTrapped = game.totalTigers - possibleMoves.length;
+        game.save();
+    }
+    return possibleMoves;
+};
+exports.getMoves = getMoves;
 //# sourceMappingURL=gamefunctions.js.map

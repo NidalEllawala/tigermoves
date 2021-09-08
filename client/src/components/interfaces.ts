@@ -16,4 +16,5 @@ interface BoardPosition {
   }
 }
 
+
 export type { Board, BoardPosition }
