@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMoves = exports.emptySpaces = exports.getTurn = exports.currentBoardPosition = exports.addPlayer = exports.getGame = void 0;
+exports.goatPlaced = exports.getMoves = exports.emptySpaces = exports.getTurn = exports.currentBoardPosition = exports.addPlayer = exports.getGame = void 0;
 const index_1 = require("./index");
 const getGame = async (id) => {
     const found = await index_1.BaghChalModel.findOne({ uid: id }).exec();
@@ -10,7 +10,7 @@ exports.getGame = getGame;
 const addPlayer = async (game, player, sockId) => {
     game[player] = sockId;
     game.playerCount += 1;
-    await game.save();
+    //await game.save();
     return true;
 };
 exports.addPlayer = addPlayer;
@@ -37,16 +37,17 @@ const currentBoardPosition = (game) => {
 };
 exports.currentBoardPosition = currentBoardPosition;
 const getTurn = (game) => {
-    return 'tigers move';
-    // if (game.turn %2 != 0) {
-    //   if (game.goatsPlaced < game.totalGoats) {
-    //     return 'goats move - Phase 1';
-    //   } else {
-    //     return 'goats move - Phase 2';
-    //   }
-    // } else {
-    //   return 'tigers move';
-    // }
+    if (game.turn % 2 != 0) {
+        if (game.goatsPlaced < game.totalGoats) {
+            return 'goats move - Phase 1';
+        }
+        else {
+            return 'goats move - Phase 2';
+        }
+    }
+    else {
+        return 'tigers move';
+    }
 };
 exports.getTurn = getTurn;
 const emptySpaces = (game) => {
@@ -82,9 +83,14 @@ const getMoves = (player, game) => {
     }
     if (player === 'tiger') {
         game.tigersTrapped = game.totalTigers - possibleMoves.length;
-        game.save();
     }
     return possibleMoves;
 };
 exports.getMoves = getMoves;
+const goatPlaced = (index, game) => {
+    game.game.board[index].contains = 'goat';
+    game.game.turn += 1;
+    game.game.goatsPlaced += 1;
+};
+exports.goatPlaced = goatPlaced;
 //# sourceMappingURL=gamefunctions.js.map

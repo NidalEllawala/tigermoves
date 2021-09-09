@@ -1,18 +1,75 @@
+import { placeGoat } from './helpers';
 import { Board } from './interfaces';
 
 type MovementsProps = {
   movements: Board[];
+  fnc: any;
+  goatPlaced: any
 }
 
-function Movements ({movements}: MovementsProps) {
+function Movements ({movements, fnc, goatPlaced}: MovementsProps) {
+
+  // const selectPiece = (moves: number[], capture: number[], index: number) => {
+  //   fnc((prev: Board[]) => {
+  //     const next: Board[] = [];
+  //     prev.forEach((item) => {
+  //     next.push({...item})
+  //   });
+  //   if (moves.length) {
+  //     moves.forEach((move) => {
+  //       next[move].placePiece = true;
+  //     });
+  //   if (capture.length) {
+  //     capture.forEach((move) => {
+  //       next[move].capturePiece = true;
+  //     });
+  //   }
+  //   next[index].selected = true;
+  //   }
+  //   })
+  // }
+
+  // const placeGoat = (index: number) => {
+  //   sock.emit('goat paced', {
+  //     index,
+
+  //   })
+    // fnc((prev: Board[]) => {
+    //   const next: Board[] = [];
+    //   prev.forEach((item) => {
+    //   next.push({...item})
+    // });
+    //})
+  //}
   const positions = movements.map((position, index) => {
+    //if ismoveable true attach event handler
+    /*
+    function movePiece(i) {
+      //access index in board
+      //get array and change class property
+      //attach eventhandler
+      //change index at board to deselct piece
+    } 
+    */
     switch (position.contains) {
-      case 'tiger': 
-        return <div id={index.toString()} className="default">{"\u9899"}</div>
+      case 'tiger':
+        if (position.isMoveable) {
+          return <div id={index.toString()} className="default highlight" /*onClick={() => {selectPiece(position.moveTo, position.capture, index)}}*/>{"\u9899"}</div>
+        } else {
+          return <div id={index.toString()} className="default">{"\u9899"}</div>
+        }
       case 'goat':
         return <div id={index.toString()} className="default">{"\u9898"}</div>
       default:
-        return <div id={index.toString()} className="default"></div>
+        if (position.placePiece) {
+          return <div id={index.toString()} className="highlight move-piece"></div>
+        } else if (position.capturePiece) {
+          return <div id={index.toString()} className="default capture"></div>
+        } else if (position.placeGoat) {
+          return <div id={index.toString()} className="default highlight" onClick={() => {goatPlaced(index)}}></div>
+        } else {
+          return <div id={index.toString()} className="default"></div>
+        }
       }
     });
   

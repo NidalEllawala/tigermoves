@@ -1,8 +1,7 @@
-import { getNameOfJSDocTypedef } from 'typescript';
+
 import { BaghChalModel } from './index';
 import { Moves, BaghChal } from './interface';
 
-import { AnyKeys, Query } from 'mongoose';
 const getGame = async (id: number) => {
   const found = await BaghChalModel.findOne({uid: id}).exec();
   return found;
@@ -11,7 +10,7 @@ const getGame = async (id: number) => {
 const addPlayer = async (game: any, player: string, sockId: string) => {
   game[player] = sockId;
   game.playerCount += 1;
-  await game.save();
+  //await game.save();
   return true;
 }
 
@@ -37,16 +36,15 @@ const currentBoardPosition = (game: any) => {
 }
 
 const getTurn = (game: any) => {
-  return 'tigers move'
-  // if (game.turn %2 != 0) {
-  //   if (game.goatsPlaced < game.totalGoats) {
-  //     return 'goats move - Phase 1';
-  //   } else {
-  //     return 'goats move - Phase 2';
-  //   }
-  // } else {
-  //   return 'tigers move';
-  // }
+  if (game.turn %2 != 0) {
+    if (game.goatsPlaced < game.totalGoats) {
+      return 'goats move - Phase 1';
+    } else {
+      return 'goats move - Phase 2';
+    }
+  } else {
+    return 'tigers move';
+  }
 }
 
 const emptySpaces = (game: any): number[] => {
@@ -81,9 +79,14 @@ const getMoves = (player: string, game: any) => {
   }
   if (player === 'tiger') {
     game.tigersTrapped = game.totalTigers - possibleMoves.length;
-    game.save();
   }
   return possibleMoves;
+}
+
+const goatPlaced = (index: number, game: BaghChal) => {
+  game.game.board[index].contains = 'goat';
+  game.game.turn += 1;
+  game.game.goatsPlaced += 1;
 }
 
 
@@ -96,5 +99,6 @@ export {
   currentBoardPosition,
   getTurn,
   emptySpaces,
-  getMoves
+  getMoves,
+  goatPlaced
  };

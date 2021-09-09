@@ -1,9 +1,14 @@
 interface Board {
   contains: string;
   selected: boolean;
-  moveTo: boolean;
+  moveTo: number[];
   moveFrom: boolean;
-  capture: boolean;
+  capture: number[];
+
+  isMoveable: boolean;
+  placePiece: boolean;
+  capturePiece: boolean;
+  placeGoat: boolean;
 }
 
 interface BoardPosition {
@@ -16,5 +21,15 @@ interface BoardPosition {
   }
 }
 
+interface Move {
+  to: number[];
+  from: number;
+  capture:number[];
+}
 
-export type { Board, BoardPosition }
+interface PossibleMoves {
+  possibleMoves: Move[];
+}
+
+
+export type { Board, BoardPosition, PossibleMoves, Move }

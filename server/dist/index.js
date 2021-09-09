@@ -25,6 +25,7 @@ io.on('connection', (socket) => {
         if (game) {
             if (game.tiger === '' || game.goat === '') {
                 await gamefunctions_1.addPlayer(game, join.player, socket.id);
+                await game.save();
             }
             if (game.playerCount === 1) {
                 io.to(socket.id).emit('message', { message: 'waiting for other player' });
@@ -37,7 +38,17 @@ io.on('connection', (socket) => {
             }
         }
     });
-    function nextTurn(game) {
+    socket.on('goat placed', async (move) => {
+        console.log(move);
+        const game = await gamefunctions_1.getGame(move.gameId);
+        gamefunctions_1.goatPlaced(move.index, game);
+        await game.save();
+        const board = gamefunctions_1.currentBoardPosition(game.game);
+        io.to(game.goat).to(game.tiger).emit('update board', board);
+        //nextTurn(game);
+        // io.to(game.goat).to(game.tiger).emit('update board', game.board.currentBoardPosition());
+    });
+    async function nextTurn(game) {
         const turn = gamefunctions_1.getTurn(game.game);
         console.log(turn);
         switch (turn) {
@@ -52,6 +63,7 @@ io.on('connection', (socket) => {
             case 'tigers move':
                 console.log('case called');
                 const tigersMoves = gamefunctions_1.getMoves('tiger', game.game);
+                await game.save();
                 io.to(game.tiger).emit('tigers turn', { possibleMoves: tigersMoves });
                 break;
         }
