@@ -34,24 +34,19 @@ function Game ({player, id}: GameProps) {
   }
 
   useEffect(() => {
-    const test = io('http://localhost:3001');
-    console.log(test);
-    //test.emit is next test
     socket.emit('join this game', {gameId: id, player: player});
+    
     socket.on('message', ({message}) => {
       updateMessages(message, setUserMessages)
     });
     socket.on('update board', (positions: BoardPosition) => {
       updateBoard(positions, setGame);
     })
-
     socket.on('tigers turn', (moves) => {
       findPieces(moves, setGame);
     })
-
     socket.on('place goat', (moves) => {
       placeGoat(moves.emptySpaces, setGame);
-
     })
     //socket on disconnet reconnnect
   }, [setSocket]); 

@@ -52,14 +52,12 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('goat placed', async (move: {index: number, gameId: number}) => {
-    console.log(move)
     const game = await getGame(move.gameId);
     goatPlaced(move.index, game);
     await game.save();
     const board = currentBoardPosition(game.game);
     io.to(game.goat).to(game.tiger).emit('update board', board);
-    //nextTurn(game);
-    // io.to(game.goat).to(game.tiger).emit('update board', game.board.currentBoardPosition());
+    nextTurn(game);
   })
 
   async function nextTurn(game: any): Promise<void>{
