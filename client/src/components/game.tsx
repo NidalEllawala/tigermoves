@@ -10,10 +10,11 @@ import {
   updateMessages,
   updateBoard,
   findPieces,
-  placeGoat
+  placeGoat,
+  updateScore
 } from './helpers';
 
-import { Board, BoardPosition } from './interfaces';
+import { Score, BoardPosition } from './interfaces';
 
 
 type GameProps = {
@@ -25,6 +26,7 @@ function Game ({player, id}: GameProps) {
   const [socket, setSocket] = useState(io('http://localhost:3001'));
   const [game, setGame] = useState(newBoard());
   const [userMessages, setUserMessages] = useState<string[]>([`${player} has joined the game-${id}`]);
+  const [score, setScore] = useState<Score>({goatsRemaining: 20, goatsCaptured: 0, tigersTrapped: 0})
 
   const goatPlaced = (index: number) => {
     socket.emit('goat placed', {
@@ -51,6 +53,7 @@ function Game ({player, id}: GameProps) {
     });
     socket.on('update board', (positions: BoardPosition) => {
       updateBoard(positions, setGame);
+      updateScore(positions.score, setScore);
     });
     socket.on('tigers turn', (moves) => {
       findPieces(moves, setGame);
@@ -67,7 +70,7 @@ function Game ({player, id}: GameProps) {
       <Gameover />
       <Movements movements={game} fnc={setGame} goatPlaced={goatPlaced} movePiece={movePiece}/>
     </div>
-    <InfoPanel messages={userMessages}/>
+    <InfoPanel messages={userMessages} score={score}/>
   </div>
   )
 }

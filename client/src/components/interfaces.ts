@@ -31,5 +31,11 @@ interface PossibleMoves {
   possibleMoves: Move[];
 }
 
+interface Score {
+  goatsRemaining: number;
+  goatsCaptured: number;
+  tigersTrapped: number;
+}
 
-export type { Board, BoardPosition, PossibleMoves, Move }
+
+export type { Board, BoardPosition, PossibleMoves, Move, Score }

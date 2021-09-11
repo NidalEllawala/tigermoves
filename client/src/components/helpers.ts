@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Board, BoardPosition, PossibleMoves, Move } from './interfaces';
+import { Board, BoardPosition, PossibleMoves, Move, Score } from './interfaces';
 import { newBoard } from './board';
 
 const updateMessages = (msg: string, setter: React.Dispatch<React.SetStateAction<string[]>>) => {
@@ -55,7 +55,11 @@ const placeGoat = (spaces: number[], setter:React.Dispatch<React.SetStateAction<
   })
 }
 
-export { updateMessages, updateBoard, findPieces, placeGoat }
+const updateScore = (score: Score, setter:React.Dispatch<React.SetStateAction<Score>>) => {
+  setter(score);
+}
+
+export { updateMessages, updateBoard, findPieces, placeGoat, updateScore }
 
 /*
 
