@@ -46,6 +46,9 @@ io.on('connection', (socket) => {
         io.to(game.goat).to(game.tiger).emit('update board', board);
         nextTurn(game);
     });
+    socket.on('move piece', async (move) => {
+        console.log(move);
+    });
     async function nextTurn(game) {
         const turn = gamefunctions_1.getTurn(game.game);
         console.log(turn);

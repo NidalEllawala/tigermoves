@@ -26,11 +26,21 @@ function Game ({player, id}: GameProps) {
   const [game, setGame] = useState(newBoard());
   const [userMessages, setUserMessages] = useState<string[]>([`${player} has joined the game-${id}`]);
 
-  function goatPlaced (index: number) {
+  const goatPlaced = (index: number) => {
     socket.emit('goat placed', {
       index,
       gameId: id
-    })
+    });
+  }
+
+  const movePiece = (to: number, from: number, capture: boolean) => {
+    socket.emit('move piece', {
+      to,
+      from,
+      capture,
+      gameId: id
+    });
+
   }
 
   useEffect(() => {
@@ -41,13 +51,13 @@ function Game ({player, id}: GameProps) {
     });
     socket.on('update board', (positions: BoardPosition) => {
       updateBoard(positions, setGame);
-    })
+    });
     socket.on('tigers turn', (moves) => {
       findPieces(moves, setGame);
-    })
+    });
     socket.on('place goat', (moves) => {
       placeGoat(moves.emptySpaces, setGame);
-    })
+    });
     //socket on disconnet reconnnect
   }, [setSocket]); 
 
@@ -55,7 +65,7 @@ function Game ({player, id}: GameProps) {
   <div id="game-container">
     <div id="game-board">
       <Gameover />
-      <Movements movements={game} fnc={setGame} goatPlaced={goatPlaced}/>
+      <Movements movements={game} fnc={setGame} goatPlaced={goatPlaced} movePiece={movePiece}/>
     </div>
     <InfoPanel messages={userMessages}/>
   </div>
