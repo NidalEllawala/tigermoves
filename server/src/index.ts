@@ -49,6 +49,10 @@ io.on('connection', (socket: Socket) => {
         io.to(game.goat).to(game.tiger).emit('update board', board);
         nextTurn(game);
       }
+    } else {
+      io.to(socket.id).emit("game full or doesn't exist");
+      socket.disconnect();
+      return;
     }
   });
 
