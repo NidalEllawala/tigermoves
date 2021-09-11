@@ -89,6 +89,16 @@ const goatPlaced = (index: number, game: BaghChal) => {
   game.game.goatsPlaced += 1;
 }
 
+const movePiece = (move: {to: number, from: number, gameId: number, capture: boolean}, game: BaghChal) => {
+  game.game.board[move.to].contains = game.game.board[move.from].contains;
+  game.game.board[move.from].contains = 'empty';
+  game.game.turn += 1;
+  if (move.capture) {
+    game.game.board[game.game.board[move.from].possible_moves[game.game.board[move.from].capture.indexOf(move.to)]].contains = 'empty';
+    game.game.goatsCaptured += 1;
+  }
+}
+
 
 
 
@@ -100,5 +110,6 @@ export {
   getTurn,
   emptySpaces,
   getMoves,
-  goatPlaced
+  goatPlaced,
+  movePiece
  };

@@ -48,6 +48,12 @@ io.on('connection', (socket) => {
     });
     socket.on('move piece', async (move) => {
         console.log(move);
+        const game = await gamefunctions_1.getGame(move.gameId);
+        gamefunctions_1.movePiece(move, game);
+        await game.save();
+        const board = gamefunctions_1.currentBoardPosition(game.game);
+        io.to(game.goat).to(game.tiger).emit('update board', board);
+        nextTurn(game);
     });
     async function nextTurn(game) {
         const turn = gamefunctions_1.getTurn(game.game);

@@ -19,7 +19,8 @@ import {
   getTurn,
   emptySpaces,
   getMoves,
-  goatPlaced
+  goatPlaced,
+  movePiece
 } from './model/gamefunctions';
 
 
@@ -62,6 +63,12 @@ io.on('connection', (socket: Socket) => {
 
   socket.on('move piece', async (move: {to: number, from: number, capture: boolean, gameId: number}) => {
     console.log(move);
+    const game = await getGame(move.gameId);
+    movePiece(move, game);
+    await game.save();
+    const board = currentBoardPosition(game.game);
+    io.to(game.goat).to(game.tiger).emit('update board', board);
+    nextTurn(game);
   });
 
   async function nextTurn(game: any): Promise<void>{

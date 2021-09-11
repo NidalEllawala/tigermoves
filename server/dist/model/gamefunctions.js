@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.goatPlaced = exports.getMoves = exports.emptySpaces = exports.getTurn = exports.currentBoardPosition = exports.addPlayer = exports.getGame = void 0;
+exports.movePiece = exports.goatPlaced = exports.getMoves = exports.emptySpaces = exports.getTurn = exports.currentBoardPosition = exports.addPlayer = exports.getGame = void 0;
 const index_1 = require("./index");
 const getGame = async (id) => {
     const found = await index_1.BaghChalModel.findOne({ uid: id }).exec();
@@ -93,4 +93,14 @@ const goatPlaced = (index, game) => {
     game.game.goatsPlaced += 1;
 };
 exports.goatPlaced = goatPlaced;
+const movePiece = (move, game) => {
+    game.game.board[move.to].contains = game.game.board[move.from].contains;
+    game.game.board[move.from].contains = 'empty';
+    game.game.turn += 1;
+    if (move.capture) {
+        game.game.board[game.game.board[move.from].possible_moves[game.game.board[move.from].capture.indexOf(move.to)]].contains = 'empty';
+        game.game.goatsCaptured += 1;
+    }
+};
+exports.movePiece = movePiece;
 //# sourceMappingURL=gamefunctions.js.map
