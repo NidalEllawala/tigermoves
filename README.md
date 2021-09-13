@@ -21,15 +21,19 @@ For the tigers, the objective is to "capture" five goats to win. Capturing is pe
 <img src="https://i.imgur.com/sFRWoaW.png" width="800" >
 
 # Getting started
-Tiger-Moves will be deployed soon. Until then you can run the app to connect with another comouter in your local network.
+Tiger-Moves will be deployed soon. Until then you can run the app to connect with another comouter on your local network.
 
 In order to run this app you will need to have [MongoDB](https://www.mongodb.com/) installed and running. 
 
-1. Clone this repo - `git clone https://github.com/NidalEllawala/Tiger-Moves` and open it with your favorite code editer
+1. Clone this repo - `git clone https://github.com/NidalEllawala/tigermoves` and open it with your favorite code editer
 2. Change directory to the server folder `cd server`
 3. run `npm i` to install the necessary dependencies
 4. create a .env file in the root folder following the .env.example file provided
 5. run `node index.js`
+6. Change directory to the client folder `cd client`
+7. run `npm i` to install the necessary dependencies
+4. create a .env file in the root folder following the .env.example file provided
+5. run `npm start`
 
 # Tech Stack
 - Node.js
