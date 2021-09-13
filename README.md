@@ -23,17 +23,24 @@ For the tigers, the objective is to "capture" five goats to win. Capturing is pe
 # Getting started
 Tiger-Moves will be deployed soon. Until then you can run the app to connect with another comouter on your local network.
 
-In order to run this app you will need to have [MongoDB](https://www.mongodb.com/) installed and running. 
+The root directory has two main folders, one for the server and one for the client. In order to run the server you will need to have [MongoDB](https://www.mongodb.com/) installed and running.
 
-1. Clone this repo - `git clone https://github.com/NidalEllawala/tigermoves` and open it with your favorite code editer
-2. Change directory to the server folder `cd server`
+Start by cloning this repo -  `git clone https://github.com/NidalEllawala/tigermoves` and opening it with your favorite code editer.
+
+To run the server:
+1. Change directory to the server folder `cd server`
+2. run `npm i` to install the necessary dependencies
+3. create a .env file in the root folder following the .env.example file provided
+4. run `node index.js`
+
+To run the cient:
+1. navigate back to the root diectory
+2. Change directory to the client folder `cd client`
 3. run `npm i` to install the necessary dependencies
-4. create a .env file in the root folder following the .env.example file provided
-5. run `node index.js`
-6. Change directory to the client folder `cd client`
-7. run `npm i` to install the necessary dependencies
-4. create a .env file in the root folder following the .env.example file provided
-5. run `npm start`
+10. create a .env file in the root folder following the .env.example file provided
+11. run `npm start`
+
+You can now share the link and start playing Tiger Moves
 
 # Tech Stack
 - Node.js
